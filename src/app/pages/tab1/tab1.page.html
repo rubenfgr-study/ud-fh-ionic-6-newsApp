@@ -1,9 +1,13 @@
 <ion-header [translucent]="true" class="ion-no-border">
-  <ion-toolbar color="dark">
+  <ion-toolbar color="dark"  class="animate__animated animate__lightSpeedInRight">
     <ion-title> Ruben's News </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" color="dark">
   <app-news [news]="news"></app-news>
+  <ion-infinite-scroll threshold="150px" position="bottom" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

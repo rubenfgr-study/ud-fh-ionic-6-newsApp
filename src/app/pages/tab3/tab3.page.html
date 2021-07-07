@@ -1,16 +1,31 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 3
-    </ion-title>
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar color="dark">
+    <ion-title> Favoritos </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
+<ion-content [fullscreen]="true" color="dark">
+  <!--   <ion-slides style="height: 100%; width: 100%;" [options]="slideOpts">
+    <ion-slide>
+      <h1>Fernando</h1>
+    </ion-slide>
+  </ion-slides> -->
+  <app-news
+    *ngIf="favorites?.length > 0; else noFavorites"
+    [news]="dataLocalService.favorites"
+    [inFavorites]="true"
+  ></app-news>
+  <ng-template #noFavorites>
+    <h3
+      style="
+        height: 100%;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        align-items: center;
+      "
+    >
+      No hay favoritos
+    </h3>
+  </ng-template>
 </ion-content>

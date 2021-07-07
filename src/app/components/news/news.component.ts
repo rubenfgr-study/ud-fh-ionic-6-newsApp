@@ -8,4 +8,5 @@ import { Article } from 'src/app/interfaces/news.interfaces';
 })
 export class NewsComponent {
   @Input() news: Article[];
+  @Input() inFavorites = false;
 }

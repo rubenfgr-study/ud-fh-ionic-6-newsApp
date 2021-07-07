@@ -1,12 +1,18 @@
-<ion-card color="dark">
+<ion-card class="animate__animated animate__lightSpeedInRight"  color="dark">
   <ion-card-header>
     <ion-card-subtitle>
-      <span class="text-primary">{{ i + 1 }}. </span>
+      <span class="text-primary">{{ index + 1 }}. </span>
       <span class="new-source-name">{{ new.source.name }}</span>
+
+      <div class="new-more">
+        <ion-button (click)="launchMenu()" fill="clear">
+          <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+        </ion-button>
+      </div>
     </ion-card-subtitle>
-    <ion-card-title>{{ new.title }}</ion-card-title>
+    <ion-card-title (click)="openNew()">{{ new.title }}</ion-card-title>
   </ion-card-header>
-  <ion-img *ngIf="new.urlToImage" [src]="new.urlToImage"></ion-img>
+  <ion-img (click)="openNew()" *ngIf="new.urlToImage" [src]="new.urlToImage"></ion-img>
   <ion-card-content>
     {{ new.description }}
   </ion-card-content>

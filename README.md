@@ -11,4 +11,3 @@
 2. `ionic serve`
 
 by rubenfgr
-
