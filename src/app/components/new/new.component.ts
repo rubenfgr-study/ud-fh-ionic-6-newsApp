@@ -3,7 +3,11 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { Article } from '../../interfaces/news.interfaces';
 import { Component, Input, OnInit } from '@angular/core';
-import { ActionSheetController, ToastController } from '@ionic/angular';
+import {
+  ActionSheetController,
+  Platform,
+  ToastController,
+} from '@ionic/angular';
 
 @Component({
   selector: 'app-new',
@@ -20,7 +24,8 @@ export class NewComponent implements OnInit {
     private actionSheetController: ActionSheetController,
     private socialSharing: SocialSharing,
     private dataLocalService: DataLocalService,
-    public toastController: ToastController
+    public toastController: ToastController,
+    private platform: Platform
   ) {}
 
   ngOnInit() {}
@@ -39,12 +44,7 @@ export class NewComponent implements OnInit {
           cssClass: 'action-dark',
           handler: () => {
             console.log('Compartir');
-            this.socialSharing.share(
-              this.new.title,
-              this.new.source.name,
-              '',
-              this.new.url
-            );
+            this.shareNew();
           },
         },
         {
@@ -76,13 +76,36 @@ export class NewComponent implements OnInit {
     });
     await actionSheet.present();
   }
+
   async presentToast(message: string) {
     const toast = await this.toastController.create({
       message,
       duration: 2000,
       color: 'success',
-      cssClass: 'toast-text-color'
+      cssClass: 'toast-text-color',
     });
     toast.present();
+  }
+
+  shareNew() {
+    if (this.platform.is('cordova')) {
+      this.socialSharing.share(
+        this.new.title,
+        this.new.source.name,
+        '',
+        this.new.url
+      );
+    } else {
+      if (navigator.share) {
+        navigator
+          .share({
+            title: this.new.title,
+            text: this.new.source.name,
+            url: this.new.url,
+          })
+          .then(() => console.log('Successful share'))
+          .catch((error) => console.log('Error sharing', error));
+      }
+    }
   }
 }
